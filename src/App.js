@@ -4,6 +4,9 @@ import Filter from "./Components/Filter/Filter";
 import MovieList from "./Components/Movie/MovieList";
 import Rate from "./Components/Rate";
 import AddMovie from "./Components/AddMovie";
+import { Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import Trailler from "./Pages/Trailer";
 
 const App = () => {
   const movies = [
@@ -15,6 +18,8 @@ const App = () => {
       posterUrl:
         "https://upload.wikimedia.org/wikipedia/en/thumb/c/c9/Bharat_film_poster.jpg/220px-Bharat_film_poster.jpg",
       rating: 5,
+      id: 1,
+      trailler: "https://www.youtube.com/embed/Ea_GKoe81GY",
     },
     {
       title: "Blacklight",
@@ -23,6 +28,8 @@ const App = () => {
       posterUrl:
         "https://fr.web.img2.acsta.net/pictures/22/01/27/17/27/0656121.jpg",
       rating: 5,
+      id: 2,
+      trailler: "https://www.youtube.com/embed/PE04ESdgnHI",
     },
     {
       title: "EXODUS",
@@ -30,6 +37,8 @@ const App = () => {
       posterUrl:
         "https://canvas-bridge02.tubitv.com/PuU0Nar-teSXYFfZrzglvFoh304=/9x0:1524x2162/400x574/smart/img.adrise.tv/c60a5309-61ea-4164-9b3f-96cad488bd1e.jpg",
       rating: 5,
+      id: 3,
+      trailler: "https://www.youtube.com/embed/t-8YsulfxVI",
     },
     {
       title: "Medieval",
@@ -37,6 +46,7 @@ const App = () => {
       posterUrl:
         "https://s3.amazonaws.com/static.rogerebert.com/uploads/movie/movie_poster/medieval-2022/large_medieval-movie-poster-2022.jpeg",
       rating: 5,
+      id: 4,
     },
     {
       title: "Smile",
@@ -45,6 +55,7 @@ const App = () => {
       posterUrl:
         "https://upload.wikimedia.org/wikipedia/en/thumb/7/7f/Smile_%282022_film%29.jpg/220px-Smile_%282022_film%29.jpg",
       rating: 5,
+      id: 5,
     },
     {
       title: "THE MESSAGE",
@@ -53,6 +64,7 @@ const App = () => {
       posterUrl:
         "https://media.npr.org/assets/img/2016/07/08/p47209_d_v8_aa_custom-afb9476532f68be61fc8a208f2f9ad71aac6a4f5-s1100-c50.jpg",
       rating: 5,
+      id: 6,
     },
   ];
   const [text, setText] = useState("");
@@ -65,6 +77,23 @@ const App = () => {
 
   return (
     <div className="App">
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <Home
+              text={text}
+              setText={setText}
+              rating={rating}
+              setRating={setRating}
+              movies={movies}
+            />
+          }
+        />
+        <Route path="/trailler/:id" element={<Trailler movies={movies} />} />
+      </Routes>
+
+      {/*
       <Filter
         text={text}
         setText={setText}
@@ -79,6 +108,8 @@ const App = () => {
         )}
       />
       <Rate />
+        */}
+
       <AddMovie handleAdd={add} />
     </div>
   );

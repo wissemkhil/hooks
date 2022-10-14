@@ -1,6 +1,10 @@
 import React from "react";
 import Rate from "../Rate";
-const MovieCard = ({ movie: { title, description, posterUrl, rating } }) => {
+import { Link } from "react-router-dom";
+const MovieCard = ({
+  movie: { title, description, posterUrl, rating, id },
+}) => {
+  console.log("id:", id);
   return (
     <div className="container">
       <div className="hero-container">
@@ -14,14 +18,16 @@ const MovieCard = ({ movie: { title, description, posterUrl, rating } }) => {
             <div className="ticket__content">
               <h4 className="ticket__movie-title">{title}</h4>
               <p className="ticket__movie-description">{description}</p>
-              <p className="ticket__rating">
-                <Rate rating={rating} />
-              </p>
+
+              <Rate rating={rating} />
+
+              <div className="btn">
+                <Link to={`/trailler/${id}`}>show trailler</Link>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      ;
     </div>
   );
 };

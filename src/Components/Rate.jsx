@@ -20,7 +20,7 @@ const Rate = ({ rating, setRating }) => {
     }
     return starArray;
   };
-  return <div>{stars(rating)}</div>;
+  return <div className="ticket__rating">{stars(rating)}</div>;
 };
 
 Rate.defaultProps = {

@@ -1,102 +1,107 @@
+import { Button } from "bootstrap";
 import React, { useState } from "react";
-import Rate from "./Rate";
 import Modal from "react-modal";
-
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-  },
-};
 Modal.setAppElement("#root");
 
-const AddMovie = ({ handleAdd }) => {
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [form, setForm] = useState({
-    title: "",
-    posterUrl: "",
-    description: "",
-    rate: 1,
-  });
+const AddMovie = (props) => {
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [title, setTitle] = useState("");
+  const [posterURL, setPosterURL] = useState("");
+  const [description, setDescription] = useState("");
+  const [rating, setRating] = useState("");
 
-  function clearForm() {
-    setForm({
-      title: "",
-      posterUrl: "",
-      description: "",
-      rate: 1,
-    });
-  }
-  function openModal() {
-    clearForm();
-    setIsOpen(true);
-  }
-
-  function closeModal() {
-    setIsOpen(false);
-  }
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+  const openModal = () => setModalIsOpen(true);
+  const closeModal = () => setModalIsOpen(false);
+  const handleAdd = () => {
+    const newMovie = {
+      id: Math.floor(Math.random() * 1000),
+      title,
+      posterURL,
+      description,
+      rating: +rating,
+    };
+    props.add(newMovie);
+    setTitle("");
+    setPosterURL("");
+    setDescription("");
+    setRating("");
+    closeModal();
   };
-
-  const handleRate = (rate) => setForm({ ...form, rate: rate });
 
   return (
     <div>
-      <button className="btn" onClick={openModal}>
-        Add Movie
-      </button>
-      <Modal
-        isOpen={modalIsOpen}
-        style={customStyles}
-        onRequestClose={closeModal}
+      <button
+        style={{ margin: "2rem", border: "solid 1px black", padding: "5px" }}
+        onClick={openModal}
       >
+        add movie
+      </button>
+      <Modal isOpen={modalIsOpen} onRequestClose={closeModal}>
+        <h1 style={{ color: "blue" }}>Add Movie</h1>
         <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            let newMovie = {
-              ...form,
-              id: Math.random(),
-            };
-            handleAdd(newMovie);
-            closeModal();
+          style={{
+            backgroundColor: "white",
+            margin: "8px",
+            border: "solid 1px black",
           }}
         >
-          <h2>Add new movie</h2>
-          <label>Movie name: </label>
+          <h5 style={{ color: "black" }}>Title:</h5>
           <input
             type="text"
-            value={form.title}
             name="title"
-            onChange={handleChange}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
-          <br />
-          <label>Movie image: </label>
+          <h5 style={{ color: "black" }}>PosterURL:</h5>
           <input
             type="url"
-            value={form.posterUrl}
-            name="posterUrl"
-            onChange={handleChange}
+            name="posterURL"
+            value={posterURL}
+            onChange={(e) => setPosterURL(e.target.value)}
+            style={{ color: "#556B2F", border: "solid 1px #556B2F" }}
           />
-          <br />
-          <label>Movie description: </label>
-          <input
-            type="text"
-            value={form.description}
+          <h5 style={{ color: "black" }}>Description:</h5>
+          <textarea
             name="description"
-            onChange={handleChange}
+            cols="30"
+            rows="10"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            style={{ color: "#556B2F", border: "solid 1px #556B2F" }}
+          ></textarea>
+          <h5 style={{ color: "black" }}>Rating:</h5>
+          <input
+            type="number"
+            name="rating"
+            min="1"
+            max="5"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+            style={{ color: "#556B2F", border: "solid 1px #556B2F" }}
           />
-          <br />
-          <label>Movie rate</label>
-          <Rate rate={form.rate} handleRate={handleRate} />
-          <button type="submit">Add</button>
-          <button onClick={closeModal}>Cancel</button>
         </form>
+        <button
+          style={{
+            color: "blue",
+            margin: "7px",
+            border: "solid 1px blue",
+            padding: "1rem",
+          }}
+          onClick={handleAdd}
+        >
+          add
+        </button>
+        <button
+          style={{
+            color: "blue",
+            margin: "7px",
+            padding: "1rem",
+            border: "solid 1px blue",
+          }}
+          onClick={closeModal}
+        >
+          close
+        </button>
       </Modal>
     </div>
   );

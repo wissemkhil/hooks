@@ -6,6 +6,10 @@
   padding: 0px;
   margin: 0px;
 }
+.btn {
+  margin: 2rm;
+  border: solid 1px rgb(34, 31, 31);
+}
 body {
   background-color: #999;
 }
